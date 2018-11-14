@@ -1,0 +1,254 @@
+package gk;
+import java.util.Collections;
+import java.util.Enumeration;
+import java.util.Scanner;
+import java.util.Vector;
+
+class hocsinh implements Comparable<hocsinh>{
+	private String Hoten;
+	private String Ho;
+	private String Ten;
+	private String Diachi;
+	private int Tuoi;
+	private double Diemtoan;
+	private double Diemtb;
+	public hocsinh()
+	{
+		this.Hoten=new String("");
+		this.Diachi=new String("");
+		this.Tuoi=0;
+		this.Diemtoan=0;	
+	}
+	public hocsinh(String Ho,String Ten,String Diachi,int Tuoi,double Diemtoan,double Diemtb)
+	{
+		this.Ho=Ho;
+		this.Ten=Ten;
+		this.Hoten=this.Ho+" "+this.Ten;
+		this.Diachi=Diachi;
+		this.Tuoi=Tuoi;
+		this.Diemtoan=Diemtoan;
+		this.Diemtb=Diemtb;
+		}
+	public String getHoten() {
+		return Hoten;
+	}
+	public void setHoten(String hoten) {
+		this.Hoten = hoten;
+	}
+	public String getHo() {
+		return Ho;
+	}
+	public void setHo(String ho) {
+		this.Ho = ho;
+	}
+	public String getTen() {
+		return Ten;
+	}
+	public void setTen(String ten) {
+		this.Ten = ten;
+	}
+	public String getDiachi() {
+		return Diachi;
+	}
+	public void setDiachi(String diachi) {
+		this.Diachi = diachi;
+	}
+	public int getTuoi() {
+		return Tuoi;
+	}
+	public void setTuoi(int tuoi) {
+		this.Tuoi = tuoi;
+	}
+	public double getDiemtoan() {
+		return Diemtoan;
+	}
+	public void setDiemtoan(double diemtoan) {
+		this.Diemtoan = diemtoan;
+	}
+	public double getDiemtb() {
+		return Diemtb;
+	}
+	public void setDiemtb(double diemtb) {
+		this.Diemtb = diemtb;
+	}
+	@Override
+	public int compareTo(hocsinh st) {
+		if (this.getDiemtb() > st.getDiemtb()) {
+			return 1;
+		} else if (this.getDiemtb() == st.getDiemtb()) {
+			return 0;
+		}
+		return -1;
+	}
+	
+	
+}
+
+public class QLHS {
+	Scanner key = new Scanner(System.in);
+	Vector<hocsinh> vector = new Vector<>();
+	public QLHS() {
+		while (true) {
+			System.out.println("---Chuong trinh quan ly---");
+			System.out.println("1. Nhap gia tri danh sach HS");
+			System.out.println("2. Sap xep HS theo chieu tang dan cua diemtb");
+			System.out.println("3. Tim doi tuong HS co diem toan cao nhat");
+			System.out.println("4. Hien thi tat ca HS co tuoi lon hon 23");
+			System.out.println("5. Tim tat ca HS co ho Huynh");
+			System.out.println("6. Hien thi danh sach HS co dia chi o Da Nang");
+			System.out.println("7. Thoat");
+			int chon;
+			System.out.println("Moi ban chon chuc nang:");
+			chon= Integer.parseInt(key.nextLine());
+			switch(chon) {
+			case 1:
+				this.NhapTT();
+				break;
+			case 2:
+				this.Thutu(vector);
+				break;
+			case 3:
+				this.Diemtoan();
+				break;
+			case 4:
+				this.Tuoihon23(vector);
+				break;
+			case 5:
+				HoHuynh(vector);
+				break;
+			case 6:
+				this.DiachiDN(vector);
+				break;
+			case 7:
+				System.out.println("Ket thuc chuong trinh");
+				return;
+			}
+		}
+	}
+	public void NhapTT() {
+		System.out.println("---Nhap thong tin HS --*");
+		System.out.println("So luong HS vao: ");
+		int soHS;
+		soHS= Integer.parseInt(key.nextLine());
+		int mucluc=0;
+		for (int i=0;i < soHS;i++) {
+			System.out.print("Nhap vao HO HS thu " + (i + 1) + " : ");
+			String Ho = key.nextLine();
+			System.out.print("Nhap vao TEN HS thu " + (i + 1) + " : ");
+			String Ten = key.nextLine();
+			System.out.print("Nhap vao dia chi cua HS thu " + (i + 1) + " : ");
+			String Diachi = key.nextLine();
+			System.out.print("Nhap vao tuoi HS thu " + (i + 1) + " : ");
+			int Tuoi = Integer.parseInt(key.nextLine());
+			System.out.print("Nhap vao diem toan cua HS thu " + (i + 1) + " : ");
+			double Diemtoan = Double.parseDouble(key.nextLine());
+			System.out.print("Nhap vao DTB cua HS thu " + (i + 1) + " : ");
+			double Diemtb = Double.parseDouble(key.nextLine());
+			System.out.println("\n -------------- \n");
+			hocsinh st = new hocsinh(Ho,Ten,Diachi,Tuoi,Diemtoan,Diemtb);
+			vector.add(st);
+		}
+	}
+	public hocsinh caonhat(Vector<hocsinh> vector) {
+		double max = 0.0;
+		for (hocsinh hocsinh : vector) {
+			if (hocsinh.getDiemtoan() >= max) {
+				max = hocsinh.getDiemtoan();
+			}
+		}
+		for (hocsinh hocsinh : vector) {
+			if (hocsinh.getDiemtoan() == max) {
+				return hocsinh;
+			}
+		}
+		return null;
+	}
+	public void InTT(hocsinh st) {
+		System.out.println("Ten SV: " + st.getHoten());
+		System.out.println("Tuoi: " + st.getTuoi());
+		System.out.println("Dia chi: " + st.getDiachi());
+		System.out.println("Diem Toan: " + st.getDiemtoan());
+		System.out.println("TBC: " + st.getDiemtb());
+		System.out.println("-...............................-");
+	}
+	public void Thutu(Vector<hocsinh> vector) {
+		Collections.sort(vector);
+		for (hocsinh student : vector) {
+			InTT(student);
+		}
+	}
+	public void Diemtoan() {
+		hocsinh maxtoan = caonhat(vector);
+		if (maxtoan != null) {
+			InTT(maxtoan);
+		}else {
+			System.out.println("Chua co HS de tim kiem!");
+		}
+	}
+	public void Tuoihon23(Vector<hocsinh> vector) {
+		System.out.println("HS co tuoi lon hon 23____");
+		int count = 0;
+		for (hocsinh hocsinh : vector) {
+			
+			if (hocsinh.getTuoi() > 23) {
+				InTT(hocsinh);
+				count = count + 1;
+			}
+		}
+		if (count == 0) {
+			System.out.println("Khong tim thay HS co tuoi lon hon 23______\n");
+		}
+	}
+
+	public void DiachiDN(Vector<hocsinh> vector) {
+		System.out.println("Danh sach HS co dia chi o Da Nang_____");
+		int count = 0;
+		for (hocsinh student : vector) {
+			hocsinh s = equalsDaNang(student);
+			if (s != null) {
+				InTT(s);
+				count = count + 1;
+			}
+		}
+		if (count == 0) {
+			System.out.println("Khong tim thay HS co dia chi o Da Nang_____\n");
+		}
+	}
+
+	public void HoHuynh(Vector<hocsinh> vector) {
+		System.out.println("Danh sach HS co ho Huynh_______");
+		int count = 0;
+		for (hocsinh student : vector) {
+			hocsinh s = firstNameEqualsHuynh(student);
+			if (s != null) {
+				InTT(s);
+				count = count + 1;
+			}
+		}
+		if (count == 0) {
+			System.out.println("Khong tim thay HS co ho Huynh_______\n");
+		}
+	}
+
+	public hocsinh equalsDaNang(hocsinh st) {
+		if ("Da Nang".equalsIgnoreCase(st.getDiachi())) {
+			return st;
+		}
+		return null;
+	}
+
+	public hocsinh firstNameEqualsHuynh(hocsinh st) {
+		if (st.getHoten().startsWith("Huynh")) {
+			return st;
+		}
+		return null;
+	}
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		new QLHS();
+
+	}
+
+
+}
